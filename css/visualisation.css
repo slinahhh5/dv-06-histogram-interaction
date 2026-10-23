@@ -1,0 +1,27 @@
+﻿/* Styles shared by all the charts on the page */
+.chart-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.chart-container svg {
+  width: 100%;
+  height: auto;
+  background-color: #fffaf0; /* same as bodyBackgroundColor in shared-constants.js */
+}
+
+/* Axis text and labels */
+.chart-container .tick text {
+  font-size: 11px;
+}
+
+.axis-label {
+  font-size: 12px;
+  fill: #333;
+}
+
+/* Bars react when the mouse is over them */
+.bar:hover {
+  opacity: 0.8;
+}

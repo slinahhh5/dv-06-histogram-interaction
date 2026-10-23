@@ -1,0 +1,45 @@
+﻿/* General page styles */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fffaf0;
+  color: #4a4a4a;
+}
+
+header {
+  background-color: #d2691e;
+  padding: 10px 40px;
+}
+
+header h1 {
+  margin: 10px 0;
+  font-size: 1.8rem;
+  color: #4a3a30;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 40px;
+}
+
+h2 {
+  color: #4a3a30;
+}
+
+.intro {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.source {
+  font-size: 0.9rem;
+}
+
+footer {
+  max-width: 900px;
+  margin: 20px auto 0 auto;
+  padding: 10px 40px;
+  font-size: 0.85rem;
+  color: #666;
+}
