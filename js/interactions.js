@@ -1,50 +1,60 @@
 ﻿const populateFilters = (data) => {
 
-  // Redraw the bars using only the TVs that match the selected filter
-  const updateHistogram = (filterId, data) => {
+  // Redraw the bars using the TVs that match BOTH active filters
+  const updateHistogram = () => {
 
-    // 1. Keep all the TVs for "all", otherwise keep only the TVs with that screen technology
-    const updatedData = filterId === "all"
-      ? data
-      : data.filter(tv => tv.screenTech === filterId);
+    // Read which button is active in each group of filters
+    const activeScreen = filters_screen.find(filter => filter.isActive).id;
+    const activeSize = filters_size.find(filter => filter.isActive).id;
 
-    // 2. Create new bins from the filtered data (same bin generator, same bin edges)
+    // Start with all the TVs and narrow them down for every filter that is not "all"
+    let updatedData = data;
+    if (activeScreen !== "all") {
+      updatedData = updatedData.filter(tv => tv.screenTech === activeScreen);
+    }
+    if (activeSize !== "all") {
+      updatedData = updatedData.filter(tv => tv.screenSize === +activeSize);
+    }
+
+    // Create new bins from the filtered data (same bin generator, same bin edges)
     const updatedBins = binGenerator(updatedData);
 
-    // 3. Bind the new bins to the existing bars and move the bars with a transition
-    //    Only y and height change because the x positions and widths of the bins stay the same
+    // Move the bars to their new heights with a transition
     d3.selectAll("#histogram .bar")
       .data(updatedBins)
       .transition()
-        .duration(750)                  // length of the animation in milliseconds
-        .ease(d3.easeCubicInOut)        // slow at the start and at the end, faster in the middle
+        .duration(750)
+        .ease(d3.easeCubicInOut)
         .attr("y", d => yScale(d.length))
         .attr("height", d => innerHeight - yScale(d.length));
   };
 
-  // Build the filter buttons from the filters_screen array in shared-constants.js
-  d3.select("#filters_screen")
-    .selectAll(".filter")
-    .data(filters_screen)
-    .join("button")
-      // The "active" class styles the selected button (see base.css)
-      .attr("class", d => `filter ${d.isActive ? "active" : ""}`)
-      .text(d => d.label)
-      // The click event gives us the event and the data (d) of the clicked button
-      .on("click", (event, d) => {
-        console.log("Clicked filter data:", d);
+  // Build one group of toggle buttons from a filter array
+  const buildButtons = (containerId, filters) => {
+    d3.select(containerId)
+      .selectAll(".filter")
+      .data(filters)
+      .join("button")
+        .attr("class", d => `filter ${d.isActive ? "active" : ""}`)
+        .text(d => d.label)
+        .on("click", (event, d) => {
+          console.log("Clicked filter data:", d);
 
-        // Only the clicked button is active, all the others are switched off
-        filters_screen.forEach(filter => {
-          filter.isActive = filter.id === d.id;
+          // Only the clicked button is active inside its own group
+          filters.forEach(filter => {
+            filter.isActive = filter.id === d.id;
+          });
+
+          // Update the look of the buttons in this group
+          d3.selectAll(`${containerId} .filter`)
+            .classed("active", filter => filter.id === d.id);
+
+          // Update the histogram using the state of both groups
+          updateHistogram();
         });
+  };
 
-        // Update the look of the buttons: add or remove the "active" class
-        d3.selectAll("#filters_screen .filter")
-          .classed("active", filter => filter.id === d.id);
-
-        // Update the histogram with the data for the selected filter
-        updateHistogram(d.id, data);
-      });
+  buildButtons("#filters_screen", filters_screen);
+  buildButtons("#filters_size", filters_size);
 
 };

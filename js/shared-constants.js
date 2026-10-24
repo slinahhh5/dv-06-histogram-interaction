@@ -31,3 +31,13 @@ const filters_screen = [
   { id: "LCD",  label: "LCD",  isActive: false },
   { id: "OLED", label: "OLED", isActive: false }
 ];
+
+// Array of filter options for the most frequent screen sizes (in inches)
+const filters_size = [
+  { id: "all", label: "All Sizes", isActive: true },
+  { id: "24",  label: '24"',       isActive: false },
+  { id: "32",  label: '32"',       isActive: false },
+  { id: "55",  label: '55"',       isActive: false },
+  { id: "65",  label: '65"',       isActive: false },
+  { id: "98",  label: '98"',       isActive: false }
+];
