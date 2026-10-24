@@ -19,6 +19,15 @@
     // Create new bins from the filtered data (same bin generator, same bin edges)
     const updatedBins = binGenerator(updatedData);
 
+    // Rescale the y-axis to the tallest bin of the filtered data
+    yScale.domain([0, d3.max(updatedBins, d => d.length)]).nice();
+
+    // Redraw the y-axis with a transition
+    d3.select("#histogram .y-axis")
+      .transition()
+        .duration(750)
+        .call(d3.axisLeft(yScale).ticks(14).tickFormat(d3.format(",")));
+
     // Move the bars to their new heights with a transition
     d3.selectAll("#histogram .bar")
       .data(updatedBins)
@@ -58,3 +67,4 @@
   buildButtons("#filters_size", filters_size);
 
 };
+
