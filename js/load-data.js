@@ -12,8 +12,9 @@ d3.csv("data/Ex6_TVdata_withStar.csv", d => ({
 
   // Call the functions that use the data once it is loaded
   drawHistogram(data);
-  // populateFilters(data) will be added in Exercise 6.2
+  populateFilters(data);
 
 }).catch(error => {
   console.error("Error loading the CSV file:", error);
 });
+

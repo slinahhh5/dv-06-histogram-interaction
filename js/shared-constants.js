@@ -21,3 +21,13 @@ const binGenerator = d3.bin()
   .value(d => d.energyConsumption)
   .domain([0, 2800])
   .thresholds(14);
+
+// Array of filter options for screen types
+// id: matches the screenTech values in the data (or "all"), label: text on the button,
+// isActive: tells whether the button is selected at the start
+const filters_screen = [
+  { id: "all",  label: "All",  isActive: true },
+  { id: "LED",  label: "LED",  isActive: false },
+  { id: "LCD",  label: "LCD",  isActive: false },
+  { id: "OLED", label: "OLED", isActive: false }
+];
