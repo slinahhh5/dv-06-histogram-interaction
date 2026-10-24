@@ -1,6 +1,6 @@
 ﻿const populateFilters = (data) => {
 
-  // Redraw the bars using the TVs that match BOTH active filters
+  // Redraw the bars and the dots using the TVs that match BOTH active filters
   const updateHistogram = () => {
 
     // Read which button is active in each group of filters
@@ -16,17 +16,22 @@
       updatedData = updatedData.filter(tv => tv.screenSize === +activeSize);
     }
 
+    // Fade the scatterplot dots that do not match the filters
+    updateScatterplot(updatedData);
+
     // Create new bins from the filtered data (same bin generator, same bin edges)
     const updatedBins = binGenerator(updatedData);
 
     // Rescale the y-axis to the tallest bin of the filtered data
-    yScale.domain([0, d3.max(updatedBins, d => d.length)]).nice();
+    // Use at least 1 so the scale does not collapse when no TV matches the filters
+    const maxCount = Math.max(d3.max(updatedBins, d => d.length), 1);
+    yScale.domain([0, maxCount]).nice();
 
     // Redraw the y-axis with a transition
     d3.select("#histogram .y-axis")
       .transition()
         .duration(750)
-        .call(d3.axisLeft(yScale).ticks(14).tickFormat(d3.format(",")));
+        .call(d3.axisLeft(yScale).ticks(Math.min(14, yScale.domain()[1])).tickFormat(d3.format(",")));
 
     // Move the bars to their new heights with a transition
     d3.selectAll("#histogram .bar")
@@ -58,7 +63,7 @@
           d3.selectAll(`${containerId} .filter`)
             .classed("active", filter => filter.id === d.id);
 
-          // Update the histogram using the state of both groups
+          // Update the charts using the state of both groups
           updateHistogram();
         });
   };
@@ -68,3 +73,25 @@
 
 };
 
+// Show only the circles of the TVs that match the filters (the others fade out)
+const updateScatterplot = (filteredData) => {
+
+  // A Set makes it quick to check whether a TV is in the filtered data
+  // The circles are bound to the same objects, so the check works by identity
+  const visible = new Set(filteredData);
+
+  innerChartS
+    .selectAll(".dot")
+    .transition()
+      .duration(750)
+      .attr("opacity", d => visible.has(d) ? 0.5 : 0);
+};
+
+// Placeholders for Exercise 6.4: the tooltip and the mouse events are built there
+const createTooltip = () => {
+  // Tooltip code will go here in Exercise 6.4
+};
+
+const handleMouseEvents = () => {
+  // Mouse event code will go here in Exercise 6.4
+};

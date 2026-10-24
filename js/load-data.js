@@ -13,8 +13,14 @@ d3.csv("data/Ex6_TVdata_withStar.csv", d => ({
   // Call the functions that use the data once it is loaded
   drawHistogram(data);
   populateFilters(data);
+  drawScatterplot(data);
+
+  // The tooltip is built in Exercise 6.4 (these two functions do nothing yet)
+  createTooltip();
+  handleMouseEvents();
 
 }).catch(error => {
   console.error("Error loading the CSV file:", error);
 });
+
 

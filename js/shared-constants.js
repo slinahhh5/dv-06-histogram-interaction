@@ -41,3 +41,18 @@ const filters_size = [
   { id: "65",  label: '65"',       isActive: false },
   { id: "98",  label: '98"',       isActive: false }
 ];
+
+// Inner chart variable for the scatterplot (assigned in scatterplot.js)
+// It is declared with let because its value is set later when the chart is drawn
+let innerChartS;
+
+// Tooltip dimensions (used in Exercise 6.4)
+const tooltipWidth = 65;
+const tooltipHeight = 32;
+
+// Scales for the scatterplot (domains and ranges are set in scatterplot.js)
+const xScaleS = d3.scaleLinear();
+const yScaleS = d3.scaleLinear();
+
+// Colour scale used to identify the screen type
+const colorScale = d3.scaleOrdinal();

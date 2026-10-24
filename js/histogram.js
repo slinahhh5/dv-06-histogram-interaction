@@ -56,6 +56,7 @@
   // Add the y-axis
   innerChart
     .append("g")
+      .attr("class", "y-axis")
       .call(d3.axisLeft(yScale).ticks(14).tickFormat(d3.format(",")));
 
   // Add the x-axis label under the axis, aligned to the right end
@@ -77,3 +78,4 @@
       .attr("text-anchor", "start");
 
 };
+
