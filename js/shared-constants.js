@@ -47,7 +47,7 @@ const filters_size = [
 let innerChartS;
 
 // Tooltip dimensions (used in Exercise 6.4)
-const tooltipWidth = 65;
+const tooltipWidth = 240;
 const tooltipHeight = 32;
 
 // Scales for the scatterplot (domains and ranges are set in scatterplot.js)
@@ -56,3 +56,4 @@ const yScaleS = d3.scaleLinear();
 
 // Colour scale used to identify the screen type
 const colorScale = d3.scaleOrdinal();
+

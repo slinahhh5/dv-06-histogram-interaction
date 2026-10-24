@@ -97,7 +97,7 @@ const updateScatterplot = (filteredData) => {
 
 // Text shown in the tooltip for one TV
 // Extension: change this line to show the brand and the model as well
-const getTooltipText = d => d.screenSize;
+const getTooltipText = d => `${d.brand} ${d.model}, ${d.screenSize}"`;
 
 // Create the tooltip: a rectangle and a text inside a group, hidden at the start
 const createTooltip = () => {
@@ -175,3 +175,4 @@ const handleMouseEvents = () => {
         .attr("transform", "translate(0, 500)");
     });
 };
+
